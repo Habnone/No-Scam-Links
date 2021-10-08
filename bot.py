@@ -4,7 +4,7 @@ import asyncio
 import aiohttp
 
 #set the bot variable
-bot = commands.Bot(command_prefix = '!')
+bot = commands.Bot(command_prefix = '')
 
 #Gets a list of scam domains
 async def getlinks():
