@@ -7,6 +7,6 @@ Python 3.8 or higher is required.
 # Installation (if you don't know what your doing)
 1) Run `py -3 -m pip install -r requirements.txt` for Windows or `python3 -m pip install -r requirements.txt` for Linux
 2) Open bot.py in a text editor, go to the bottom and put your bot token to where it says 'BOT TOKEN HERE'
-
+3) In discord drag No Scam Links role to the top
 # Credit
 This bot was made by me and Oakchris1955.
