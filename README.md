@@ -5,7 +5,8 @@ It deletes the message and optionally kicks or bans the user who sent the malici
 Python 3.8 or higher is required. 
 
 # Installation (if you don't know what your doing)
-Open bot.py in a text editor, go to the bottom and put your bot token to where it says 'BOT TOKEN HERE'
+1) Run `py -3 -m pip install -r requirements.txt` for Windows or `python3 -m pip install -r requirements.txt` for Linux
+2) Open bot.py in a text editor, go to the bottom and put your bot token to where it says 'BOT TOKEN HERE'
 
 # Credit
 This bot was made by me and Oakchris1955.
