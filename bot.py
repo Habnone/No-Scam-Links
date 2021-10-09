@@ -56,4 +56,9 @@ async def on_message(message):
         #Bans the member from your server (remove # to enable)
         #await message.author.ban(reason='Malicious link', delete_message_days=1)
 
-bot.run('BOT TOKEN HERE')
+#load the bot token from the "token" file
+with open('token') as f:
+    bot_token = f.read()
+
+#run the bot
+bot.run(bot_token)
