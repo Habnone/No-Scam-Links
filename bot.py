@@ -7,6 +7,7 @@ import aiohttp
 bot = commands.Bot(command_prefix = '')
 
 #Gets a list of scam domains
+@tasks.loop(seconds=300.0)
 async def getlinks():
 
     async with aiohttp.ClientSession() as session:
@@ -14,7 +15,9 @@ async def getlinks():
         banned_links = 'https://api.hyperphish.com/gimme-domains'
         async with session.get(banned_links) as resp:
             links = await resp.json()
-            return links
+            print('Got scam links data. Dumping them into a variable...')
+            bot.banned_links = links
+            print('Dumbing done')
 
 #Deletes a message:
 async def del_message(msg):
@@ -30,10 +33,11 @@ async def del_message(msg):
 @bot.event
 async def on_ready():
     print('Fetching scam links list...')
-    bot.banned_links = await getlinks()
+    getlinks.start()
+    #bot.banned_links = await getlinks()
     print("Bot is ready!")
 
-#Checks if message has a malicious link
+# Checks if message has a malicious link
 @bot.event
 async def on_message(message):
     if any(i in message.content for i in bot.banned_links):
@@ -56,9 +60,9 @@ async def on_message(message):
         #Bans the member from your server (remove # to enable)
         #await message.author.ban(reason='Malicious link', delete_message_days=1)
 
-#load the bot token from the "token" file
+# load the bot token from the "token" file
 with open('token') as f:
     bot_token = f.read()
 
-#run the bot
+# run the bot
 bot.run(bot_token)
