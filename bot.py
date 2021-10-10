@@ -49,7 +49,7 @@ async def on_message(message):
         except discord.NotFound(response, msg):
             print(f'The message with ID : {msg.id} was already deleted by someone else')
         except discord.HTTPException(response, msg):
-            print(f'An error occured while tried deleting the messagewith ID : {msg.id}. I will retry 1 time')
+            print(f'An error occured while tried deleting the message with ID : {msg.id}. I will retry 1 time')
             await del_message(message)
         else:
             print(f'The message with ID : {message.id} was succesfully deleted')
