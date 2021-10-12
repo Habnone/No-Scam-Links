@@ -12,7 +12,7 @@ async def get_current_time():
     now = datetime.now()
     return now.strftime("%H:%M:%S")
 
-#Gets a list of scam domains
+#Gets a list of scam domains every 5 minutes
 @tasks.loop(seconds=300.0)
 async def getlinks():
     print(f'{await get_current_time()} | Fetching scam links list...')
