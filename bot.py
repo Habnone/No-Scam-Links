@@ -6,11 +6,20 @@ import sys
 from datetime import datetime
 
 #set the bot variable
-bot = commands.Bot(command_prefix = '')
+bot = commands.Bot(command_prefix = commands.when_mentioned_or('nsl'))
 
 async def get_current_time():
     now = datetime.now()
     return now.strftime("%H:%M:%S")
+
+#the command's cog
+class cmds(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
+    
+    @commands.command
+    async def info(self, ctx):
+        await ctx.reply('This is a placeholder command')
 
 #Gets a list of scam domains every 5 minutes
 @tasks.loop(seconds=300.0)
@@ -41,6 +50,7 @@ async def del_message(msg):
 async def on_ready():
     getlinks.start()
     #bot.banned_links = await getlinks()
+    bot.add_cog(cmds(bot))
     print(f"{await get_current_time()} | Bot is ready!")
 
 # Checks if message has a malicious link
@@ -65,6 +75,8 @@ async def on_message(message):
 
         #Bans the member from your server (remove # to enable)
         #await message.author.ban(reason='Malicious link', delete_message_days=1)
+    else:
+        await bot.process_commands(message)
 
 # load the bot token from the "token" file
 with open('token') as f:
@@ -73,7 +85,6 @@ with open('token') as f:
     else:
         f.seek(0)
         bot_token = f.read()
-
 
 # run the bot
 bot.run(bot_token)
