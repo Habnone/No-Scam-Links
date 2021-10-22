@@ -12,4 +12,4 @@ Python 3.8 or higher is required.
 This bot was made by me and Oakchris1955.
 
 # NOTE
-Currently, the api this bot uses is down. We encourage you to not use it till further notice
+~~Currently, the api this bot uses is down. We encourage you to not use it till further notice~~
