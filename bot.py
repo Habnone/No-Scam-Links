@@ -49,7 +49,7 @@ async def del_message(msg):
 @bot.event
 async def on_ready():
     getlinks.start()
-    #bot.banned_links = await getlinks()
+    bot.banned_links = await getlinks()
     bot.add_cog(cmds(bot))
     print(f"{await get_current_time()} | Bot is ready!")
 
