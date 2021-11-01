@@ -33,7 +33,7 @@ async def getlinks():
             links = await resp.json()
             print(f'{await get_current_time()} | Got scam links data. Dumping them into a variable...')
             bot.banned_links = links
-            print(f'{await get_current_time()} | Dumbing done')
+            print(f'{await get_current_time()} | Dumbing done. Found {len(links)} websites')
 
 #Deletes a message:
 async def del_message(msg):
