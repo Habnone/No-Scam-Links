@@ -6,7 +6,7 @@ import sys
 from datetime import datetime
 
 #set the bot variable
-bot = commands.Bot(command_prefix = commands.when_mentioned_or('nsl'))
+bot = commands.Bot(command_prefix = commands.when_mentioned_or('nsl', 'nsl!'))
 
 async def get_current_time():
     now = datetime.now()
@@ -29,7 +29,7 @@ async def getlinks():
     async with aiohttp.ClientSession() as session:
 
         banned_links = 'https://api.hyperphish.com/gimme-domains'
-        async with session.get(banned_links) as resp:
+        async with session.get(banned_links, timeout=5) as resp:
             links = await resp.json()
             print(f'{await get_current_time()} | Got scam links data. Dumping them into a variable...')
             bot.banned_links = links
@@ -49,7 +49,7 @@ async def del_message(msg):
 @bot.event
 async def on_ready():
     getlinks.start()
-    bot.banned_links = await getlinks()
+    #bot.banned_links = await getlinks()
     bot.add_cog(cmds(bot))
     print(f"{await get_current_time()} | Bot is ready!")
 
