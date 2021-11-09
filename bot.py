@@ -6,20 +6,11 @@ import sys
 from datetime import datetime
 
 #set the bot variable
-bot = commands.Bot(command_prefix = commands.when_mentioned_or('nsl', 'nsl!'))
+bot = commands.Bot(command_prefix = commands.when_mentioned_or('nsl'))
 
 async def get_current_time():
     now = datetime.now()
     return now.strftime("%H:%M:%S")
-
-#the command's cog
-class cmds(commands.Cog):
-    def __init__(self, bot):
-        self.bot = bot
-    
-    @commands.command
-    async def info(self, ctx):
-        await ctx.reply('This is a placeholder command')
 
 #Gets a list of scam domains every 5 minutes
 @tasks.loop(seconds=300.0)
@@ -47,16 +38,22 @@ async def del_message(msg):
         print(f'{await get_current_time()} | Second attempt to delete message with ID: {msg.id} was succesful')
 
 @bot.event
+async def on_connect():
+    bot.banned_links = None
+    print(f'{await get_current_time()} | Loaded empty scam list')
+
+@bot.event
 async def on_ready():
     getlinks.start()
-    #bot.banned_links = await getlinks()
-    bot.add_cog(cmds(bot))
+    bot.load_extension('cmds')
     print(f"{await get_current_time()} | Bot is ready!")
 
 # Checks if message has a malicious link
 @bot.event
 async def on_message(message):
-    if any(i in message.content for i in bot.banned_links):
+    if bot.banned_links == None:
+        print(f"{await get_current_time()} | The scam list isn't ready yet. Not scanning message with ID : {message.id}")
+    elif any(i in message.content for i in bot.banned_links):
         #Deletes the message and print a console message if it fails (recommended  to keep enabled)
         try:
             await message.delete()
