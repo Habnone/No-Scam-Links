@@ -51,8 +51,8 @@ async def on_ready():
 # Checks if message has a malicious link
 @bot.event
 async def on_message(message):
-    if bot.banned_links == None:
-        print(f"{await get_current_time()} | The scam list isn't ready yet. Not scanning message with ID : {message.id}")
+    if bot.banned_links is None:
+        print(f"{await get_current_time()} | The scam list isn't ready yet. Won't scan the message with ID : {message.id}")
     elif any(i in message.content for i in bot.banned_links):
         #Deletes the message and print a console message if it fails (recommended  to keep enabled)
         try:
@@ -66,6 +66,7 @@ async def on_message(message):
             await del_message(message)
         else:
             print(f'{await get_current_time()} | The message with ID : {message.id} was succesfully deleted')
+            await ctx.send(f'{ctx.author.mention}, no scam links are allowed')
 
         #Kicks the member from your server (remove # to enable)
         #await message.author.kick(reason="Malicious link")
