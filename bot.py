@@ -77,7 +77,7 @@ async def on_message(message):
         await bot.process_commands(message)
 
 # load the bot token from the "token" file
-with open('token') as f:
+with open('token.txt') as f:
     if f.read() == 'ENTER BOT TOKEN HERE':
         sys.exit('No token found in file "token"')
     else:
